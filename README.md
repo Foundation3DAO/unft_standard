@@ -1392,7 +1392,7 @@ sequenceDiagram
     participant UNFT as UNFT Standard
     participant Chain as Sui Blockchain
 
-    Dev->>UNFT: create_collection_v2&lt;MyNFT&gt;
+    Dev->>UNFT: create_collection_v2<MyNFT>
     UNFT->>Chain: Create NftCollection (shared)
     UNFT->>Chain: Create Metadata (shared)
     UNFT-->>Dev: Return Capabilities (owned)
@@ -2166,5 +2166,7 @@ MIT
 
 ## Acknowledgments
 [IPX Coin](https://github.com/interest-protocol/ipx-coin-standard)
+
 [Coin Registry Module](https://github.com/MystenLabs/sui/blob/main/crates/sui-framework/packages/sui-framework/sources/registries/coin_registry.move)
+
 ---
