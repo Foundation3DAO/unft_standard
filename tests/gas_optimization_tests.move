@@ -52,7 +52,7 @@ fun test_batch_mint_emits_single_batch_event() {
         let publisher = ts::take_from_sender<package::Publisher>(&scenario);
         let mut registry = get_registry_mut(&scenario);
 
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
             &publisher,
             &mut registry,
             str(b"Batch Test"),
@@ -130,7 +130,7 @@ fun test_batch_event_contains_all_nft_ids() {
         let publisher = ts::take_from_sender<package::Publisher>(&scenario);
         let mut registry = get_registry_mut(&scenario);
 
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
             &publisher,
             &mut registry,
             str(b"Test"),
@@ -216,7 +216,7 @@ fun test_batch_event_count_field_accurate() {
         let publisher = ts::take_from_sender<package::Publisher>(&scenario);
         let mut registry = get_registry_mut(&scenario);
 
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
             &publisher,
             &mut registry,
             str(b"Test"),
@@ -325,7 +325,7 @@ fun test_single_mint_still_uses_minted_event() {
         let publisher = ts::take_from_sender<package::Publisher>(&scenario);
         let mut registry = get_registry_mut(&scenario);
 
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
             &publisher,
             &mut registry,
             str(b"Test"),
@@ -391,7 +391,7 @@ fun test_duplicate_pause_early_returns() {
         let publisher = ts::take_from_sender<package::Publisher>(&scenario);
         let mut registry = get_registry_mut(&scenario);
 
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
             &publisher,
             &mut registry,
             str(b"Test"),
@@ -467,7 +467,7 @@ fun test_duplicate_resume_early_returns() {
         let publisher = ts::take_from_sender<package::Publisher>(&scenario);
         let mut registry = get_registry_mut(&scenario);
 
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
             &publisher,
             &mut registry,
             str(b"Test"),
@@ -560,7 +560,7 @@ fun test_pause_idempotence_no_event_spam() {
         let publisher = ts::take_from_sender<package::Publisher>(&scenario);
         let mut registry = get_registry_mut(&scenario);
 
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
             &publisher,
             &mut registry,
             str(b"Test"),
@@ -618,7 +618,7 @@ fun test_resume_idempotence_no_event_spam() {
         let publisher = ts::take_from_sender<package::Publisher>(&scenario);
         let mut registry = get_registry_mut(&scenario);
 
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
             &publisher,
             &mut registry,
             str(b"Test"),

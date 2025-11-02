@@ -259,8 +259,6 @@ public struct CollectionResumedEvent<phantom T> has copy, drop {
 // ----------------------------
 // Collection initialization (requires Publisher authority)
 // ----------------------------
-// Note: V2 only provides registry-based collection creation via create_collection_v2()
-// and create_unbounded_collection_v2() to ensure global uniqueness per type.
 
 
 // ----------------------------
@@ -1156,11 +1154,9 @@ public(package) fun destroy_components_for_tests<T>(
 // ----------------------------
 // Testing helpers
 // ----------------------------
-// Note: V2 tests should use new_collection_components() directly or create_collection_v2()
-// to ensure proper registry integration.
 
 // ============================
-// Global Registry (optional, v2 API)
+// Global Registry (optional)
 // ============================
 
 public struct NftRegistry has key {
@@ -1219,7 +1215,7 @@ public fun get_locator<T>(reg: &NftRegistry): CollectionLocator {
 }
 
 /// Create a collection with registry uniqueness enforcement.
-public fun create_collection_v2<T>(
+public fun create_collection<T>(
     publisher: &Publisher,
     registry: &mut NftRegistry,
     name: String,
@@ -1287,8 +1283,7 @@ public fun create_collection_v2<T>(
     (mint, burn_opt, meta_cap)
 }
 
-/// Unlimited supply variant of v2.
-public fun create_unlimited_collection_v2<T>(
+public fun create_unlimited_collection<T>(
     publisher: &Publisher,
     registry: &mut NftRegistry,
     name: String,
@@ -1304,7 +1299,7 @@ public fun create_unlimited_collection_v2<T>(
     option::Option<NftBurnCap<T>>,
     NftCollectionMetadataCap<T>
 ) {
-    create_collection_v2<T>(
+    create_collection<T>(
         publisher,
         registry,
         name,

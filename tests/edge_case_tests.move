@@ -49,7 +49,7 @@ fun test_max_supply_u64_max() {
         let mut registry = get_registry_mut(&scenario);
 
         // Create collection with max_supply = u64::MAX
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
             &publisher,
             &mut registry,
             str(b"Max Supply Test"),
@@ -103,7 +103,7 @@ fun test_max_supply_equals_one() {
         let mut registry = get_registry_mut(&scenario);
 
         // Minimum meaningful max_supply
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
             &publisher,
             &mut registry,
             str(b"Single Supply"),
@@ -160,7 +160,7 @@ fun test_batch_mint_at_exact_boundary() {
         let publisher = ts::take_from_sender<package::Publisher>(&scenario);
         let mut registry = get_registry_mut(&scenario);
 
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
             &publisher,
             &mut registry,
             str(b"Boundary Test"),
@@ -229,7 +229,7 @@ fun test_mint_exceeds_by_one() {
         let publisher = ts::take_from_sender<package::Publisher>(&scenario);
         let mut registry = get_registry_mut(&scenario);
 
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
             &publisher,
             &mut registry,
             str(b"Test"),
@@ -297,7 +297,7 @@ fun test_zero_decimals_allowed() {
         let mut registry = get_registry_mut(&scenario);
 
         // decimals=0 should be allowed
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
             &publisher,
             &mut registry,
             str(b"Zero Decimals"),
@@ -345,7 +345,7 @@ fun test_empty_batch_mint_early_return() {
         let publisher = ts::take_from_sender<package::Publisher>(&scenario);
         let mut registry = get_registry_mut(&scenario);
 
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
             &publisher,
             &mut registry,
             str(b"Test"),
@@ -403,7 +403,7 @@ fun test_single_item_batch_vs_single_mint() {
         let publisher = ts::take_from_sender<package::Publisher>(&scenario);
         let mut registry = get_registry_mut(&scenario);
 
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
             &publisher,
             &mut registry,
             str(b"Test"),
@@ -490,7 +490,7 @@ fun test_pause_resume_pause_cycle() {
         let publisher = ts::take_from_sender<package::Publisher>(&scenario);
         let mut registry = get_registry_mut(&scenario);
 
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
             &publisher,
             &mut registry,
             str(b"Test"),
@@ -562,7 +562,7 @@ fun test_url_unicode_characters() {
         let mut registry = get_registry_mut(&scenario);
 
         // Unicode in URLs
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
             &publisher,
             &mut registry,
             str(b"\xE4\xB8\xAD\xE6\x96\x87\xE5\x90\x8D\xE5\xAD\x97"), // "中文名字" in UTF-8
@@ -598,7 +598,7 @@ fun test_update_all_fields_sequentially() {
         let publisher = ts::take_from_sender<package::Publisher>(&scenario);
         let mut registry = get_registry_mut(&scenario);
 
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
             &publisher,
             &mut registry,
             str(b"Original"),
@@ -687,7 +687,7 @@ fun test_update_same_field_twice_in_sequence() {
         let publisher = ts::take_from_sender<package::Publisher>(&scenario);
         let mut registry = get_registry_mut(&scenario);
 
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
             &publisher,
             &mut registry,
             str(b"Original"),
@@ -780,7 +780,7 @@ fun test_max_supply_hint_larger_than_max_supply() {
 
         // This is allowed but discouraged: hint > actual max
         // max_supply_hint is purely informational
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
             &publisher,
             &mut registry,
             str(b"Test"),
@@ -842,7 +842,7 @@ fun test_clear_and_reset_external_url() {
         let publisher = ts::take_from_sender<package::Publisher>(&scenario);
         let mut registry = get_registry_mut(&scenario);
 
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
             &publisher,
             &mut registry,
             str(b"Test"),
@@ -924,7 +924,7 @@ fun test_burn_all_circulating_then_mint_more() {
         let publisher = ts::take_from_sender<package::Publisher>(&scenario);
         let mut registry = get_registry_mut(&scenario);
 
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
             &publisher,
             &mut registry,
             str(b"Test"),
@@ -1012,7 +1012,7 @@ fun test_finalize_at_different_minted_counts() {
         let publisher = ts::take_from_sender<package::Publisher>(&scenario);
         let mut registry = get_registry_mut(&scenario);
 
-        let (mint_cap, burn_opt, meta_cap) = unft::create_unlimited_collection_v2<TestNFT>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_unlimited_collection<TestNFT>(
             &publisher,
             &mut registry,
             str(b"Test"),
@@ -1094,7 +1094,7 @@ fun test_remaining_supply_edge_cases() {
         let publisher = ts::take_from_sender<package::Publisher>(&scenario);
         let mut registry = get_registry_mut(&scenario);
 
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
             &publisher,
             &mut registry,
             str(b"Test"),

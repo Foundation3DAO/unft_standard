@@ -33,13 +33,13 @@ module unft_standard::unft_discoverability_tests {
 
         create_publisher_and_registry(&mut scenario);
 
-        // tx: create collection v2 and hand caps to sender
+        // tx: create collection and hand caps to sender
         ts::next_tx(&mut scenario, @0xC0FFEE);
         {
             let publisher = ts::take_from_sender<package::Publisher>(&scenario);
             let mut registry = get_registry_mut(&scenario);
 
-            let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+            let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
                 &publisher,
                 &mut registry,
                 b"Test Collection".to_string(),
@@ -141,7 +141,7 @@ module unft_standard::unft_discoverability_tests {
         {
             let publisher = ts::take_from_sender<package::Publisher>(&scenario);
             let mut registry = get_registry_mut(&scenario);
-            let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<TestNFT>(
+            let (mint_cap, burn_opt, meta_cap) = unft::create_collection<TestNFT>(
                 &publisher,
                 &mut registry,
                 b"Batch".to_string(),

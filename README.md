@@ -125,7 +125,7 @@ module simple_nft::character {
         registry: &mut unft::NftRegistry,
         ctx: &mut TxContext
     ) {
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<Character>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<Character>(
             publisher,
             registry,
             string::utf8(b"Character NFT"),        // name
@@ -248,7 +248,7 @@ use unft_standard::unft_standard as unft;
 use sui::object;
 
 // 2. Create collection
-let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<MyNFT>(
+let (mint_cap, burn_opt, meta_cap) = unft::create_collection<MyNFT>(
     publisher,
     registry,
     name,
@@ -304,9 +304,9 @@ Every NFT type registers globally, ensuring discoverability:
 
 ```move
 // Type T can only have ONE collection
-unft::create_collection_v2<GameItem>(...)  // ✅ First registration succeeds
+unft::create_collection<GameItem>(...)  // ✅ First registration succeeds
 
-unft::create_collection_v2<GameItem>(...)  // ❌ Second registration aborts
+unft::create_collection<GameItem>(...)  // ❌ Second registration aborts
 ```
 
 Benefits:
@@ -324,7 +324,7 @@ Users can burn their own NFTs without permission:
 
 ```move
 // Create collection WITHOUT BurnCap
-let (mint_cap, burn_opt, meta_cap) = create_collection_v2<MyNFT>(
+let (mint_cap, burn_opt, meta_cap) = create_collection<MyNFT>(
     ...,
     make_burn_cap: false,  // ← No BurnCap
     ...
@@ -342,7 +342,7 @@ Only the BurnCap holder can burn NFTs:
 
 ```move
 // Create collection WITH BurnCap
-let (mint_cap, burn_opt, meta_cap) = create_collection_v2<MyNFT>(
+let (mint_cap, burn_opt, meta_cap) = create_collection<MyNFT>(
     ...,
     make_burn_cap: true,  // ← Create BurnCap
     ...
@@ -392,12 +392,12 @@ unft::track_mint<Weapon>(&cap, &mut collection, &mut nft.id, ctx);
 
 ### Collection Creation
 
-#### `create_collection_v2<T>`
+#### `create_collection<T>`
 
 Creates a new NFT collection with full configuration.
 
 ```move
-public fun create_collection_v2<T>(
+public fun create_collection<T>(
     publisher: &Publisher,
     registry: &mut NftRegistry,
     name: String,
@@ -449,7 +449,7 @@ public fun create_collection_v2<T>(
 > max_supply_hint: Some(1000),
 > ```
 >
-> When creating a collection via `create_collection_v2()`, the `max_supply` parameter is used for **both** fields initially. Update `max_supply_hint` separately via `update_metadata()` if needed.
+> When creating a collection via `create_collection()`, the `max_supply` parameter is used for **both** fields initially. Update `max_supply_hint` separately via `update_metadata()` if needed.
 
 **Returns:**
 - `NftMintCap<T>`: Capability to mint NFTs
@@ -459,7 +459,7 @@ public fun create_collection_v2<T>(
 **Example:**
 
 ```move
-let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<GameItem>(
+let (mint_cap, burn_opt, meta_cap) = unft::create_collection<GameItem>(
     &publisher,
     &mut registry,
     string::utf8(b"Epic Weapons"),
@@ -474,12 +474,12 @@ let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<GameItem>(
 );
 ```
 
-#### `create_unlimited_collection_v2<T>`
+#### `create_unlimited_collection<T>`
 
 Shorthand for creating unlimited supply collections.
 
 ```move
-public fun create_unlimited_collection_v2<T>(
+public fun create_unlimited_collection<T>(
     publisher: &Publisher,
     registry: &mut NftRegistry,
     name: String,
@@ -493,7 +493,7 @@ public fun create_unlimited_collection_v2<T>(
 ): (NftMintCap<T>, Option<NftBurnCap<T>>, NftCollectionMetadataCap<T>)
 ```
 
-**Note:** Equivalent to calling `create_collection_v2` with `max_supply = None`.
+**Note:** Equivalent to calling `create_collection` with `max_supply = None`.
 
 ---
 
@@ -989,7 +989,7 @@ UNFT Standard uses descriptive error codes to help debug issues. All errors are 
 
 **`ENotRegistered`**
 - **Trigger**: Attempting to retrieve a collection locator for an unregistered type
-- **Fix**: Create the collection first using `create_collection_v2<T>()`
+- **Fix**: Create the collection first using `create_collection<T>()`
 
 ### Supply Errors
 
@@ -1083,7 +1083,7 @@ module game::weapon {
         registry: &mut unft::NftRegistry,
         ctx: &mut TxContext
     ) {
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<Weapon>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<Weapon>(
             publisher,
             registry,
             string::utf8(b"Epic Weapons"),
@@ -1178,7 +1178,7 @@ module art::limited_edition {
         ctx: &mut TxContext
     ) {
         // Start with UNLIMITED supply
-        let (mint_cap, burn_opt, meta_cap) = unft::create_unlimited_collection_v2<ArtPiece>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_unlimited_collection<ArtPiece>(
             publisher,
             registry,
             string::utf8(b"Limited Edition Art"),
@@ -1277,7 +1277,7 @@ module marketplace::kiosk_nft {
         registry: &mut unft::NftRegistry,
         ctx: &mut TxContext
     ) {
-        let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<CollectibleItem>(
+        let (mint_cap, burn_opt, meta_cap) = unft::create_collection<CollectibleItem>(
             publisher,
             registry,
             string::utf8(b"Collectibles"),
@@ -1392,7 +1392,7 @@ sequenceDiagram
     participant UNFT as UNFT Standard
     participant Chain as Sui Blockchain
 
-    Dev->>UNFT: create_collection_v2<MyNFT>
+    Dev->>UNFT: create_collection<MyNFT>
     UNFT->>Chain: Create NftCollection (shared)
     UNFT->>Chain: Create Metadata (shared)
     UNFT-->>Dev: Return Capabilities (owned)
@@ -1516,7 +1516,7 @@ option::none()
 ```move
 // Scenario: Dynamic edition size
 // 1. Start with unlimited
-create_unlimited_collection_v2<MyNFT>(...);
+create_unlimited_collection<MyNFT>(...);
 
 // 2. Mint during sale period
 while (sale_active) {
@@ -1847,7 +1847,7 @@ Transaction aborted: A collection for this NFT type is already registered
 ```move
 // Check if collection exists before creating
 if (!unft::collection_exists<MyNFT>(&registry)) {
-    let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<MyNFT>(...);
+    let (mint_cap, burn_opt, meta_cap) = unft::create_collection<MyNFT>(...);
     // ...
 } else {
     // Collection already exists, retrieve it instead
@@ -1937,7 +1937,7 @@ while (i < quantity) {
 **Solution:**
 ```move
 // Store collection ID for future access
-let (mint_cap, burn_opt, meta_cap) = unft::create_collection_v2<MyNFT>(...);
+let (mint_cap, burn_opt, meta_cap) = unft::create_collection<MyNFT>(...);
 let locator = unft::get_locator<MyNFT>(&registry);
 let collection_id = unft::locator_collection_id(locator);
 
